@@ -38,17 +38,15 @@ on:
 
 jobs:
   publish:
+    name: 'PR Merged'
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18.x]
-
     steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js ${{ matrix.node-version }}
+      - uses: actions/checkout@v2
+      - name: Use Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: '18'
       - name: Install dependencies
         run: yarn install
       - name: Set branch
@@ -66,19 +64,23 @@ jobs:
       - name: set origin
         run: |
           git remote set-url origin ${{secrets.REPOSITORY}}
-      - name: Bump version
+      - name: Bump version major
+        if: contains(github.event.pull_request.labels.*.name, 'major')
+        run: |
+          npm version major --git-tag-version false 
+          echo "CAN_CONTINUE=TRUE"
+      - name: Bump version minor
+        if: contains(github.event.pull_request.labels.*.name, 'minor')
+        run: |
+          npm version minor --git-tag-version false
+          echo "CAN_CONTINUE=TRUE" 
+      - name: Bump version patch
+        if: contains(github.event.pull_request.labels.*.name, 'patch')
         run: |
           npm version patch --git-tag-version false 
-      - name: Status
-        run: |
-          git status
-      - name: Refs
-        run: |
-          git show-ref
-      - name: Commit
+      - name: Commit and push
+        if: steps.Bump version major.outcome == 'success' || steps.Bump version minor.outcome == 'success' || steps.Bump version patch.outcome == 'success'
         run: |
           git add package.json
-          git commit -m "bump"
-      - name: Commit version bump
-        run: |
+          git commit -m "Bump version to $(jq -r '.version' package.json) [skip ci]"
           git push origin main
