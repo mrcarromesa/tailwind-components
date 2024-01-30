@@ -67,17 +67,19 @@ jobs:
       - name: Bump version major
         if: contains(github.event.pull_request.labels.*.name, 'major')
         run: |
-          npm version major --git-tag-version false
+          npm version major --git-tag-version false 
+          echo "CAN_CONTINUE=TRUE"
       - name: Bump version minor
         if: contains(github.event.pull_request.labels.*.name, 'minor')
         run: |
           npm version minor --git-tag-version false
+          echo "CAN_CONTINUE=TRUE" 
       - name: Bump version patch
         if: contains(github.event.pull_request.labels.*.name, 'patch')
         run: |
-          npm version patch --git-tag-version false
+          npm version patch --git-tag-version false 
       - name: Commit and push
-        if: contains(github.event.pull_request.labels.*.name, 'major') || contains(github.event.pull_request.labels.*.name, 'minor') || contains(github.event.pull_request.labels.*.name, 'patch')
+        if: steps.Bump version major.outcome == 'success' || steps.Bump version minor.outcome == 'success' || steps.Bump version patch.outcome == 'success'
         run: |
           git add package.json
           git commit -m "Bump version to $(jq -r '.version' package.json) [skip ci]"
