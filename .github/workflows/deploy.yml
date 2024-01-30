@@ -58,6 +58,15 @@ jobs:
       - name: Bump version
         run: |
           npm version patch -m "Bump version to %s [skip ci]"
+      - name: Status
+        run: |
+          git status
+      - name: Refs
+        run: |
+          git show-ref
+      - name: Commit
+        run: |
+          git commit -m "bump"
       - name: Commit version bump
         run: |
           git push origin main
