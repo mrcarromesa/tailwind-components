@@ -1,0 +1,84 @@
+# name: Deploy Package to NPM
+
+# on:
+#   push:
+#     tags:
+#       - 'v[0-9]+.[0-9]+.[0-9]+'
+# jobs:
+#   publish_npm:
+#     name: Publishing to NPM
+
+#     runs-on: ubuntu-latest
+
+#     permissions:
+#       actions:
+#         write
+#       contents:
+#         write
+
+#     steps:
+#       - uses: actions/checkout@v3
+
+#       - name: Setup NodeJs
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: x.y # Version that you want use here
+#           registry-url: https://registry.npmjs.org/
+                    
+#       - name: Install Packages
+#         run: yarn
+
+name: Bump version
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+
+jobs:
+  publish:
+    name: 'PR Merged'
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: yarn install
+      - name: Set branch
+        run: |
+          git checkout main
+          git pull
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.TOKEN_GH }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git config --global user.email "${{ secrets.USER_EMAIL }}"
+          git config --global user.name "GitHub Actions"
+      - name: set origin
+        run: |
+          git remote set-url origin ${{secrets.REPOSITORY}}
+      - name: Bump version major
+        if: contains(github.event.pull_request.labels.*.name, 'major')
+        run: |
+          npm version major --git-tag-version false
+      - name: Bump version minor
+        if: contains(github.event.pull_request.labels.*.name, 'minor')
+        run: |
+          npm version minor --git-tag-version false
+      - name: Bump version patch
+        if: contains(github.event.pull_request.labels.*.name, 'patch')
+        run: |
+          npm version patch --git-tag-version false
+      - name: Commit and push
+        if: contains(github.event.pull_request.labels.*.name, 'major') || contains(github.event.pull_request.labels.*.name, 'minor') || contains(github.event.pull_request.labels.*.name, 'patch')
+        run: |
+          git add package.json
+          git commit -m "Bump version to $(jq -r '.version' package.json) [skip ci]"
+          git push origin main
