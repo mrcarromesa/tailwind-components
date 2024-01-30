@@ -1,31 +1,56 @@
-name: Deploy
+# name: Deploy Package to NPM
+
+# on:
+#   push:
+#     tags:
+#       - 'v[0-9]+.[0-9]+.[0-9]+'
+# jobs:
+#   publish_npm:
+#     name: Publishing to NPM
+
+#     runs-on: ubuntu-latest
+
+#     permissions:
+#       actions:
+#         write
+#       contents:
+#         write
+
+#     steps:
+#       - uses: actions/checkout@v3
+
+#       - name: Setup NodeJs
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: x.y # Version that you want use here
+#           registry-url: https://registry.npmjs.org/
+                    
+#       - name: Install Packages
+#         run: yarn
+
+name: Bump version
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
       - main
-jobs:
-  pull:
-    name: Run Pull
-    runs-on: ubuntu-latest
-    steps:
-    - name: GITHUB_WORKSPACE
-      run: |
-        echo $GITHUB_WORKSPACE
-    - uses: actions/checkout@v4
-    - name: LIST WORKSPACE DIR
-      run: |
-        cd $GITHUB_WORKSPACE/project/project
-        ls -al
-    - name: SHOW ENVS
-      run: |
-        echo "ACTIONS_SSH_KEY => ..."
-    - name: Copy Files to Server
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USER }}
-        key: ${{ secrets.ACTIONS_SSH_KEY }}
-        source: 'project/project/*'
-        target: ${{ secrets.WORK_DIR }}
 
-    
+jobs:
+  build:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.pull_request.merge_commit_sha }}
+        fetch-depth: '0'
+
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@1.64.0 # Don't use @master or @v1 unless you're happy to test the latest version
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN_GH }} # if you don't want to set write permissions use a PAT token
+        WITH_V: true
+        PRERELEASE: true
