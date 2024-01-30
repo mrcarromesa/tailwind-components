@@ -19,12 +19,13 @@ jobs:
       
       - name: Extract Tag Name
         id: extract_tag
-        run: echo "::set-output name=tag::${GITHUB_REF#refs/tags/}"
-
-      - name: Set branch
+        run: echo "TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+      
+      - name: Echo Tag name
         run: |
-          git checkout main
-          git pull
+          TAG=${{ env.TAG }}
+          echo $TAG
+          
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh
@@ -39,7 +40,7 @@ jobs:
 
       - name: Set Version in package.json
         run: |
-          TAG=${{ steps.extract_tag.outputs.tag }}
+          TAG=${{ env.TAG }}
           VERSION=$(echo $TAG | sed 's/v//')
           echo "Updating package.json version to $VERSION"
           # Update package.json version
@@ -49,4 +50,4 @@ jobs:
         run: |
           git add package.json
           git commit -m "Bump version to $(jq -r '.version' package.json) [skip ci]"
-          git push origin main
+          git push origin HEAD:main
