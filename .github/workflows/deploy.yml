@@ -51,23 +51,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
         run: yarn install
-      - name: Set Git user name and email
-        run: |
-          git config user.email "actions@github.com"
-          git config user.name "GitHub Actions"
-      - name: Bump version
-        run: |
-          npm version patch --git-tag-version false 
-      - name: Status
-        run: |
-          git status
-      - name: Refs
-        run: |
-          git show-ref
-      - name: Commit
-        run: |
-          git add package.json
-          git commit -m "bump"
       - name: Set branch
         run: |
           git checkout main
@@ -83,6 +66,19 @@ jobs:
       - name: set origin
         run: |
           git remote set-url origin ${{secrets.REPOSITORY}}
+      - name: Bump version
+        run: |
+          npm version patch --git-tag-version false 
+      - name: Status
+        run: |
+          git status
+      - name: Refs
+        run: |
+          git show-ref
+      - name: Commit
+        run: |
+          git add package.json
+          git commit -m "bump"
       - name: Commit version bump
         run: |
           git push origin main
