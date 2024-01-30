@@ -56,8 +56,8 @@ jobs:
           npm version patch -m "Bump version to %s [skip ci]"
       - name: Commit version bump
         run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
+          git config --global user.email "mrcarromesa@gmail.com"
+          git config --global user.name "Carlos Rodolfo"
           git add package.json
           git commit -m "Bump version to $(jq -r '.version' package.json) [skip ci]"
           git push origin main
