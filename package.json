@@ -28,7 +28,7 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build --quiet",
-    "tests": "yes | npx concurrently -k -s first -n \"SB,TEST\" -c \"magenta,blue\" \"npx http-server storybook-static --port 6006 --silent\" \"npx playwright test\"",
+    "tests": "yes | npx concurrently -k -s first -n \"SB,TEST\" -c \"magenta,blue\" \"npx http-server storybook-static --port 6006\" \"npx wait-on http://127.0.0.1:6006 &&  npx playwright test\"",
     "generate-test": "npx playwright codegen http://localhost:6006"
   },
   "dependencies": {

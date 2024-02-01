@@ -21,7 +21,11 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: |
-        yes | npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" "npx http-server storybook-static --port 6006" "npx playwright test"
+        npm run tests
+        # Capture the exit code of the last command
+        exit_code=$?
+        # Set the output variable with the exit code
+        echo "::set-output name=exit_code::$exit_code"
     - uses: actions/upload-artifact@v3
       if: always()
       with:
