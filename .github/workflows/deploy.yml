@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: '18'
       - name: Install dependencies
-        run: yarn install
+        run: npm ci
       
       - name: Extract Tag Name
         id: extract_tag
