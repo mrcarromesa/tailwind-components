@@ -6,7 +6,7 @@ test('Open Modal', async ({ page }) => {
   )
 
   await expect(
-    page.getByRole('button', { name: 'Open Modal' })
+    page.getByRole('button', { name: 'Open Modala' })
   ).toBeInViewport()
   await page.getByRole('button', { name: 'Open Modal' }).click()
   await expect(page.getByRole('dialog')).toBeAttached()
