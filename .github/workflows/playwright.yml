@@ -21,7 +21,7 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: |
-        yes | npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" "npx http-server storybook-static --port 6006 --silent" "npx playwright test"
+        yes | npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" "npx http-server storybook-static --port 6006" "npx playwright test"
     - uses: actions/upload-artifact@v3
       if: always()
       with:
