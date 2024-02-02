@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: '18'
       - name: Install dependencies
-        run: yarn install
+        run: npm ci
       
       - name: Extract Tag Name
         id: extract_tag
@@ -32,7 +32,7 @@ jobs:
           echo "${{ secrets.TOKEN_GH }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
-          git config --global user.email "${{ secrets.USER_EMAIL }}"
+          git config --global user.email "github-actions@users.noreply.github.com"
           git config --global user.name "GitHub Actions"
       - name: set origin
         run: |

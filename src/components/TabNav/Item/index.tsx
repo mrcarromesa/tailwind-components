@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import Link from 'next/link'
+// import Link from 'next/link'
 import { ElementType, Fragment, ReactNode } from 'react'
 import { useTabNav } from '../context/hooks/useTabNavRoute'
 
@@ -11,9 +11,9 @@ type FragmentComponentType = {
   asComponent?: 'span'
 } & React.AllHTMLAttributes<HTMLSpanElement>
 
-type LinkComponentType = {
-  asComponent?: typeof Link
-} & React.AllHTMLAttributes<HTMLAnchorElement>
+// type LinkComponentType = {
+//   asComponent?: typeof Link
+// } & React.AllHTMLAttributes<HTMLAnchorElement>
 
 type AnchorComponentType = {
   asComponent?: 'a'
@@ -27,7 +27,7 @@ type DefaultProps = {
 type Props = DefaultProps &
   (
     | ButtonComponentType
-    | LinkComponentType
+    // | LinkComponentType
     | AnchorComponentType
     | FragmentComponentType
   )
@@ -53,6 +53,7 @@ export const Item = ({
             !active,
         }
       )}
+      aria-hidden
       onClick={() => goToRoute(route)}
     >
       <Component {...props}>{children}</Component>

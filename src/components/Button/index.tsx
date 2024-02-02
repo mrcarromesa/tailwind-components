@@ -1,7 +1,7 @@
 'use client'
 import classNames from 'classnames'
 import { ElementType } from 'react'
-import Link, { LinkProps } from 'next/link'
+// import Link, { LinkProps } from 'next/link'
 import { Input } from './Input'
 
 const buttonVariation = {
@@ -50,10 +50,10 @@ type ButtonComponentType = {
   asComponent?: 'button'
 } & Omit<React.AllHTMLAttributes<HTMLButtonElement>, 'size'>
 
-type LinkComponentType = {
-  asComponent?: typeof Link
-} & React.AllHTMLAttributes<HTMLAnchorElement> &
-  LinkProps
+// type LinkComponentType = {
+//   asComponent?: typeof Link
+// } & React.AllHTMLAttributes<HTMLAnchorElement> &
+//   LinkProps
 
 type AnchorComponentType = {
   asComponent?: 'a'
@@ -62,7 +62,7 @@ type AnchorComponentType = {
 type Props = ButtonProps &
   (
     | ButtonComponentType
-    | LinkComponentType
+    // | LinkComponentType
     | AnchorComponentType
     | InputComponentType
   )

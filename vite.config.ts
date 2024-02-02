@@ -2,8 +2,7 @@ import path from 'path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import dts from 'vite-plugin-dts'
-import tailwindcss from 'tailwindcss';
-
+import tailwindcss from 'tailwindcss'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -20,16 +19,22 @@ export default defineConfig({
           react: 'React',
           'react-dom': 'ReactDOM',
           tailwindcss: 'tailwindcss',
-        }
-      }
+        },
+      },
     },
     // sourcemap: true,
     // emptyOutDir: true,
   },
-  plugins: [react(), dts()],
+  plugins: [
+    react(),
+    dts({
+      exclude: ['**/*.stories.tsx'],
+      tsconfigPath: './tsconfig.build.json',
+    }),
+  ],
   css: {
     postcss: {
-      plugins: [tailwindcss]
-    }
-  }
+      plugins: [tailwindcss],
+    },
+  },
 })

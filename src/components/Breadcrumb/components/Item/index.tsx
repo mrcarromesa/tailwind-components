@@ -1,10 +1,11 @@
-import Link from 'next/link'
+// import Link from 'next/link'
 import { ElementType, ReactNode } from 'react'
 
 type InactiveProps = {
   active?: false
   href: string
-  linkComponentType?: 'a' | typeof Link
+  // linkComponentType?: 'a' | typeof Link
+  linkComponentType?: 'a'
 } & React.AllHTMLAttributes<HTMLAnchorElement>
 
 type ActiveProps = {

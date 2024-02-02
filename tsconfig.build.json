@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "typeRoots": ["./dist/index.d.ts", "node_modules/@types"]
+  },
+  "include": ["src", "./index.ts"],
+}
