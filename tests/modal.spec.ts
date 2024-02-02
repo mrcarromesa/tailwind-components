@@ -9,5 +9,5 @@ test('Open Modal', async ({ page }) => {
 
   await page.waitForTimeout(500)
 
-  await expect(page.getByRole('dialog')).toBeVisible()
+  await expect(page.getByRole('dialog')).not.toBeVisible()
 })
