@@ -1,7 +1,6 @@
 'use client'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, HTMLAttributes, ReactNode } from 'react'
 import classNames from 'classnames'
-import { HTMLAttributes, ReactNode } from 'react'
 import { useAccordion } from '../../context'
 
 type Props = {

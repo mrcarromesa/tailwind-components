@@ -11,9 +11,7 @@ import bgStripedPlugin from './tailwind/plugins/bgStripedPlugin'
 
 const config: Config = {
   darkMode: 'class',
-  content: [
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+  content: ['./src/components/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
       colors: {

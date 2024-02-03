@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import classNames from 'classnames'
 import { HTMLAttributes, ReactNode } from 'react'
 import { useAccordion } from '../../context'
