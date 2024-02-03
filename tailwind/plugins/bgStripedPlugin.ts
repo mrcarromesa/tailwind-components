@@ -1,5 +1,5 @@
 import plugin from 'tailwindcss/plugin'
-import { CSSRuleObject, PluginAPI } from 'tailwindcss/types/config'
+import type { CSSRuleObject, PluginAPI } from 'tailwindcss/types/config'
 
 export default plugin.withOptions(() => ({ addUtilities }: PluginAPI) => {
   const bgs = {

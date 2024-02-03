@@ -7,7 +7,7 @@ export const useCanRenderPortal = ({ containerId }: Props) => {
   const [canRender, setCanRender] = useState(false)
 
   useEffect(() => {
-    if (typeof document === undefined) {
+    if (typeof document === 'undefined') {
       return
     }
 

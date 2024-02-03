@@ -26,8 +26,8 @@ type Props<T extends ExtendComponent> = DefaultProps &
   (T extends keyof JSX.IntrinsicElements
     ? CommonComponentProps<T>
     : T extends keyof InternalElements
-    ? SpecialComponentProps
-    : never)
+      ? SpecialComponentProps
+      : never)
 
 export function Item<T extends ExtendComponent>({
   children,

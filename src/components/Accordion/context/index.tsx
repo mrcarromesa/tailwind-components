@@ -33,7 +33,10 @@ export const AccordionContextProvider = ({
 
   const toggleActive = (eventKey: string) =>
     setActive((current) => {
-      const currentEventKeyIsActive = current.hasOwnProperty(eventKey)
+      const currentEventKeyIsActive = Object.prototype.hasOwnProperty.call(
+        current,
+        eventKey
+      )
         ? !current[eventKey]
         : true
 
