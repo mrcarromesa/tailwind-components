@@ -23,7 +23,7 @@ export const ButtonGroup = ({
       className={classNames('inline-flex', sizeButton[size], {
         ['flex-col [&_>*+*:not(:last-child)]:!rounded-none [&_>*+*]:!rounded-t-none [&_>*+*]:!border-t-0 [&_>*:not(:last-child)]:rounded-b-none [&_>*]:first-of-type:rounded-t-md']:
           vertical,
-        ['[&_*:not(:last-child)]:rounded-r-none [&_>*+*]:rounded-l-none [&_>*+*]:!border-l-0']:
+        ['[&_*:not(:last-child)]:!rounded-r-none [&_>*+*]:!rounded-l-none [&_>*+*]:!border-l-0']:
           !vertical,
       })}
     >

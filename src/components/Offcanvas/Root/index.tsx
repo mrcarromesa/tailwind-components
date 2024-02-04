@@ -1,11 +1,9 @@
 import {
-  // MutableRefObject,
   ReactNode,
   forwardRef,
   useEffect,
   useState,
   useImperativeHandle,
-  // useRef,
 } from 'react'
 import { createPortal } from 'react-dom'
 import { Overlay } from '../Overlay'
@@ -45,7 +43,7 @@ export type OverlayElementProps = {
   close: () => void
 }
 
-const OFF_CANVAS_CONTAINER_ID = '__-offcanvas-container'
+const OFF_CANVAS_CONTAINER_ID = '__-offcanvas-areas'
 
 export const Root = forwardRef<OverlayElementProps, Props>(
   ({ children, align = 'left', dismissible }, ref) => {
@@ -53,7 +51,6 @@ export const Root = forwardRef<OverlayElementProps, Props>(
     const [canShowOffcanvas, setCanShowOffcanvas] = useState(false)
     const [isClosing, setIsClosing] = useState(false)
 
-    // const rootRef = useRef<OverlayElementProps | null>(null)
     useEffect(() => {
       if (typeof document === 'undefined') {
         return
@@ -89,7 +86,6 @@ export const Root = forwardRef<OverlayElementProps, Props>(
     }
 
     const onOpenOffCanvas = () => {
-      console.log('OI...')
       setCanShowOffcanvas(true)
       document.body.style.overflowY = 'hidden'
     }
@@ -135,4 +131,4 @@ export const Root = forwardRef<OverlayElementProps, Props>(
   }
 )
 
-Root.displayName = 'Offcanvas.Root'
+Root.displayName = 'OffcanvasComponent'
